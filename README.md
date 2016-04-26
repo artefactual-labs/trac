@@ -1,6 +1,14 @@
 Drupal TRAC review tool
 =======================
 
+Note: This project doesn't use a current version of Drupal and shouldn't
+be installed as a publicly accessible webste.
+
+Developed by MIT in a project led by Nancy McGovern, Head of Curation and
+Preservation Services at MIT Libraries. Artefactual has permission to host
+this tool for community use. The copy provided here contains data about the
+TRAC requirements that Archivematica fulfills for the repository.
+
 CONTENTS OF THIS FILE
 ---------------------
 
