@@ -1,0 +1,174 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+/* **********************************
+ *
+ * TRAC customizations
+ */
+
+@media(min-width: 980px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+.navbar .logo { 
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+#site-name {
+  line-height: 1;
+  margin: 0;
+}
+
+/* Bootstrap header overrides */
+body h1 {
+  font-size: 24px;
+}
+
+body h2 {
+  font-size: 20px;
+}
+
+body h3 {
+  font-size: 18px;
+}
+
+a[href^="http://"] {
+  background: url('/trac/sites/all/themes/trac_bootstrap/images/external_link.png') no-repeat right;
+  padding-right: 20px;
+}
+a[href^="http://"]:hover,
+a[href^="http://"]:focus {
+  background: url('/trac/sites/all/themes/trac_bootstrap/images/external_link_hover.png') no-repeat right;
+}
+
+/* Front Page Tables */
+table.status-summary, 
+table.views-table {
+  width: 100%;
+}
+table.status-summary th,
+table.views-table th {
+  text-align: left;
+  width: 25%;
+}
+table.status-summary th.section,
+table.views-table td.views-field-title {
+  width: 50%;
+}
+table.views-table caption {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: -2em;
+}
+table.status-summary td,
+table.views-table td {
+  padding: 4px;
+}
+table.views-table td.views-field-field-value,
+table.views-table td.views-field-field-status {
+  font-weight: bold;
+}
+table.views-table td.Not-started {
+  /* color: #c00;  red */
+  color: #800020; /* burgundy */
+}
+table.views-table td.In-progress {
+  /* color: #AD4B00;  dark orange */
+  color: #a93610; /* orange between burgundy and orange(d16b00) */
+}
+table.views-table td.Ready-for-review {
+  /* color: #6F6E03;  dirty yellow */
+  color: #d16b00; /* Orange - this is _barely_ accessible (3.61:1, passes large text at AA only) */
+}
+table.views-table td.Accepted {
+  /* color: #007500; dark green */
+  color: #168116; /* green */
+}
+/* swap bold/size on status summary table, to emphasize main requirement sections */
+table.status-summary th {
+  font-weight: normal;
+}
+table.status-summary tbody td.section {
+  font-weight: bold;
+}
+
+/* Requirements Nodes */
+body.node-type-trac-requirement section.block-node-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.35em;
+}
+body.node-type-trac-requirement section.block-node-title h2 {
+  display: none;
+}
+body.node-type-trac-requirement div.pane-views-requirement-child-pages-block h2 {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+}
+body.node-type-trac-requirement div.view-requirement-child-pages ul {
+  list-style-type: none;
+  margin-left: 0;
+}
+body.node-type-trac-requirement h2 {
+  font-size: 20px;
+}
+/* Requirement Nodes - Status bar */
+body.node-type-trac-requirement div.panels-flexible-row-2-1 {
+  margin-bottom: 0.5em;
+}
+body.node-type-trac-requirement div.panels-flexible-row-2-1 h2 {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+}
+body.node-type-trac-requirement div.panels-flexible-row-2-1 div.pane-content {
+  font-size: 24px;
+  font-weight: bold;
+}
+/* Requirement Nodes - Fake H2 settings for view field labels */
+body.node-type-trac-requirement div.panels-flexible-region-2-staff_only div.field-label {
+  font-size: 20px;
+  margin: 10px 0;
+}
+/* Compliance and Status fields - side-by-side and shaded */
+div.panels-flexible-region-2-status,
+div.panels-flexible-region-2-status_ {
+  width: 48%;
+  display: inline-block;
+  background: #ddd;
+  padding: 10px;
+}
+div.panels-flexible-region-2-status h2,
+div.panels-flexible-region-2-status_ h2 {
+  padding-bottom: 0px;
+  border-bottom: 1px solid #aaa;
+  line-height: 25px;
+}
+div.panels-flexible-region-2-status div.field-items,
+div.panels-flexible-region-2-status_ div.field-items {
+  margin: 10px 0;
+}
+
+/* Edit screen changes */
+div.form-wrapper {
+  margin-top: 3em;
+}
+div.form-wrapper div.form-wrapper {
+  margin-top: 0;
+}
+div.form-wrapper div.form-item label {
+  font-weight: bold;
+}
+div.form-wrapper div.form-item div.form-item label {
+  font-weight: normal;
+}
+div.form-type-checkbox label {
+  display: inline-block;
+}
+ 
