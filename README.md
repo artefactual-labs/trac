@@ -1,133 +1,104 @@
 Drupal TRAC review tool
 =======================
 
-Note: This project doesn't use a current version of Drupal and shouldn't
-be installed as a publicly accessible webste.
+PLEASE NOTE: This project uses Drupal 7.50, which, as of September 2016, is
+the most recent Drupal 7 release.  If you install this in the future, when a
+newer Drupal 7 release come out, you may need to upgrade at that time.
 
 Developed by MIT in a project led by Nancy McGovern, Head of Curation and
 Preservation Services at MIT Libraries. Artefactual has permission to host
 this tool for community use. The copy provided here contains data about the
 TRAC requirements that Archivematica fulfills for the repository.
 
-CONTENTS OF THIS FILE
----------------------
+Technical overview
+------------------
 
- * About Drupal
- * Configuration and features
- * Installation profiles
- * Appearance
- * Developing for Drupal
+This tarball contains a Drupal application as well as a SQL script that
+populates the accompanying database. Please see the deployment steps below
+for specific notes and things to change.
 
-ABOUT DRUPAL
-------------
+Most modules, and Drupal core, were current as of September, 2016. The
+site has been built upon release 7.50. Other module release versions can
+be seen in the config report. The application is smallish, with 19 contrib
+modules and only one theme.
 
-Drupal is an open source content management platform supporting a variety of
-websites ranging from personal weblogs to large community-driven websites. For
-more information, see the Drupal website at http://drupal.org/, and join the
-Drupal community at http://drupal.org/community.
+PLEASE NOTE: As I was updating this document in preparation for initial
+release, I noticed that an update to Field Group was released out of cycle
+(August 29th, 2013). This release has not been reflected in this tarball, and
+should be evaluated by whomever implements this application. Additionally, the
+Bootstrap theme is slightly behind, largely because I have not reviewed the
+latest changes and reconciled them with my custom CSS and function. The next
+release will probably include a sub-theme for these tweaks, but that didn't
+get addressed this time around.
 
-Legal information about Drupal:
- * Know your rights when using Drupal:
-   See LICENSE.txt in the same directory as this document.
- * Learn about the Drupal trademark and logo policy:
-   http://drupal.com/trademark
+The biggest change has been to the CSS styles, although there is a function
+in template.php that can be used to tweak the appearance of some form fields
+on the node edit screen. I've disabled that function in this release,
+as it has proven somewhat finicky in my testing and should probably be
+reviewed by someone wherever the application is implemented. The function
+is blah_form_element, beginning on line 303. I've included a reference in
+the code to the thread on Drupal.org that discusses the feature I attempted
+to implement.
 
-CONFIGURATION AND FEATURES
---------------------------
+System Prerequisites
+--------------------
 
-Drupal core (what you get when you download and extract a drupal-x.y.tar.gz or
-drupal-x.y.zip file from http://drupal.org/project/drupal) has what you need to
-get started with your website. It includes several modules (extensions that add
-functionality) for common website features, such as managing content, user
-accounts, image uploading, and search. Core comes with many options that allow
-site-specific configuration. In addition to the core modules, there are
-thousands of contributed modules (for functionality not included with Drupal
-core) available for download.
+The system must have Apache 2 installed and mod_rewrite access enabled.
+Also recommended is having the PHP GD and uploadstatus extensions installed.
 
-More about configuration:
- * Install, upgrade, and maintain Drupal:
-   See INSTALL.txt and UPGRADE.txt in the same directory as this document.
- * Learn about how to use Drupal to create your site:
-   http://drupal.org/documentation
- * Download contributed modules to sites/all/modules to extend Drupal's
-   functionality:
-   http://drupal.org/project/modules
- * See also: "Developing for Drupal" for writing your own modules, below.
+Ubuntu-specific instructions for enabling mod_rewrite:
 
-INSTALLATION PROFILES
----------------------
+  1. Enter "sudo a2enmod rewrite" into the command-line.
 
-Installation profiles define additional steps (such as enabling modules,
-defining content types, etc.) that run after the base installation provided
-by core when Drupal is first installed. There are two basic installation
-profiles provided with Drupal core.
+  2. Edit the file /etc/apache2/sites-enabled/000-default changing
+     "AllowOverride None" to "AllowOverride All" in the "<Directory /var/www/>"
+     section.
 
-Installation profiles from the Drupal community modify the installation process
-to provide a website for a specific use case, such as a CMS for media
-publishers, a web-based project tracking tool, or a full-fledged CRM for
-non-profit organizations raising money and accepting donations. They can be
-distributed as bare installation profiles or as "distributions". Distributions
-include Drupal core, the installation profile, and all other required
-extensions, such as contributed and custom modules, themes, and third-party
-libraries. Bare installation profiles require you to download Drupal Core and
-the required extensions separately; place the downloaded profile in the
-/profiles directory before you start the installation process. Note that the
-contents of this directory may be overwritten during updates of Drupal core;
-it is advised to keep code backups or use a version control system.
+  3. Enter "service apache2 restart" into the command-line.
 
-Additionally, modules and themes may be placed inside subdirectories in a
-specific installation profile such as profiles/your_site_profile/modules and
-profiles/your_site_profile/themes respectively to restrict their usage to only
-sites that were installed with that specific profile.
+Ubuntu-specific instructions for enabling the PHP GD extension:
 
-More about installation profiles and distributions:
-* Read about the difference between installation profiles and distributions:
-  http://drupal.org/node/1089736
-* Download contributed installation profiles and distributions:
-  http://drupal.org/project/distributions
-* Develop your own installation profile or distribution:
-  http://drupal.org/developing/distributions
+  1. Enter "sudo apt-get install php5-gd" into the command-line.
 
-APPEARANCE
-----------
+  2. Enter "service apache2 restart" into the command-line.
 
-In Drupal, the appearance of your site is set by the theme (themes are
-extensions that set fonts, colors, and layout). Drupal core comes with several
-themes. More themes are available for download, and you can also create your own
-custom theme.
+Ubuntu-specific instrructions for enabling the PHP uploadstatus extension:
 
-More about themes:
- * Download contributed themes to sites/all/themes to modify Drupal's
-   appearance:
-   http://drupal.org/project/themes
- * Develop your own theme:
-   http://drupal.org/documentation/theme
+  1. Enter the following commands into the command-line:
 
-DEVELOPING FOR DRUPAL
----------------------
+     sudo apt-get install php-pear build-essential
+     sudo pecl install uploadprogress
+     echo "extension=uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 
-Drupal contains an extensive API that allows you to add to and modify the
-functionality of your site. The API consists of "hooks", which allow modules to
-react to system events and customize Drupal's behavior, and functions that
-standardize common operations such as database queries and form generation. The
-flexible hook architecture means that you should never need to directly modify
-the files that come with Drupal core to achieve the functionality you want;
-instead, functionality modifications take the form of modules.
+  2. Enter "service apache2 restart" into the command-line.
 
-When you need new functionality for your Drupal site, search for existing
-contributed modules. If you find a module that matches except for a bug or an
-additional needed feature, change the module and contribute your improvements
-back to the project in the form of a "patch". Create new custom modules only
-when nothing existing comes close to what you need.
+You can verify the PHP extensions have been correctly installed by checking the
+status report page. When logged in as admin, select "Status report" in the
+"Reports" pull-down menu.
 
-More about developing:
- * Search for existing contributed modules:
-   http://drupal.org/project/modules
- * Contribute a patch:
-   http://drupal.org/patch/submit
- * Develop your own module:
-   http://drupal.org/developing/modules
- * Follow best practices:
-   http://drupal.org/best-practices
- * Refer to the API documentation:
-   http://api.drupal.org/api/drupal/7
+Deployment Steps
+----------------
+
+In order to deploy this application at your institution, the following things
+should be checked:
+
+1. Import that database via the SQL script. It will import into a 'trac'
+database, which must be created beforehand.
+
+2. Unpack the tarball into your chosen hosting environment. There may
+need to be some fiddling to get the relevant links to work - at MIT we run
+the application inside a /trac directory on a larger server, so there are
+hard-coded links to that directory in some of the Basic Page nodes.
+
+3. The database connection needs to be specified in the usual place (
+/sites/default/settings.php )
+
+4. There are three user accounts on the application, one for "admin" (user
+1), an "editor", and an "auditor". The passwords for each are set to the
+username - so obviously this is something that should be changed immediately.
+
+5. The text in the footer of every page about requesting an alternate format
+needs to be customized for your institution. This can be done by editing
+its block: /admin/structure/block/manage/block/2/configure
+
+Thanks, Matt Bernhardt mjbernha@mit.edu @morphosis7
