@@ -210,14 +210,7 @@
  *   );
  * @endcode
  */
-$databases['default']['default'] = array(
-     'driver' => 'mysql',
-     'database' => 'trac',
-     'username' => 'myuser',
-     'password' => 'mypassword',
-     'host' => '127.0.0.1',
-     'prefix' => '',
-);
+$databases = array();
 
 /**
  * Access control for update.php script.
@@ -271,7 +264,7 @@ $drupal_hash_salt = '';
  * It is not allowed to have a trailing slash; Drupal will add it
  * for you.
  */
-// $base_url = 'http://trac';  // NO trailing slash!
+# $base_url = 'http://www.example.com';  // NO trailing slash!
 
 /**
  * PHP settings:
